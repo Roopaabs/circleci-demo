@@ -7,6 +7,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: List Files
+          command: ls -l
+      - run:
+          name: List Backend Directory
+          command: ls -l ./backend
+      - run:
           name: Install Dependencies
           command: npm install
       - run:
@@ -18,4 +24,3 @@ workflows:
   build_and_test:
     jobs:
       - build
-
