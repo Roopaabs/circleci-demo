@@ -1,5 +1,5 @@
 # Use an official Node runtime as a parent image
-FROM node:20
+FROM node:22.5.1
 
 # Set the working directory
 WORKDIR /usr/src/app
