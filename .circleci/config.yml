@@ -18,6 +18,8 @@ jobs:
       - run:
           name: Build Backend Docker Image
           command: docker build -t backend-app:v1.0 .
+      - run:
+          name: check docker image
           command: docker ps -a
           
 workflows:
