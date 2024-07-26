@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:18
     steps:
       - checkout
       - run:
@@ -12,6 +12,9 @@ jobs:
       - run:
           name: Install Dependencies
           command: npm install
+      - setup_remote_docker:
+          version: 20.10.7
+          docker_layer_caching: true
       - run:
           name: Build Backend Docker Image
           command: docker build -t backend-app .
