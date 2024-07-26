@@ -1,15 +1,1 @@
-version:2.1
 
-jobs:
- build:
-  docker:
-   - image: circleci/node:latest
-   steps:
-    - checkout
-    - run:
-     name: install dependencies
-     command: npm install
-
-    - run:
-     name: install nodejs docker image
-     command: docker build -t backend-app ./backend
