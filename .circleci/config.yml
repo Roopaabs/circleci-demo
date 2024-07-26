@@ -17,7 +17,8 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Build Backend Docker Image
-          command: docker build -t backend-app .
+          command: docker build -t backend-app:v1.0 .
+
 
 workflows:
   version: 2
