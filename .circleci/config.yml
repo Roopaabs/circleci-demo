@@ -10,14 +10,11 @@ jobs:
           name: List Files
           command: ls -l
       - run:
-          name: List Backend Directory
-          command: ls -l ./backend
-      - run:
           name: Install Dependencies
           command: npm install
       - run:
           name: Build Backend Docker Image
-          command: docker build -t backend-app ./backend
+          command: docker build -t backend-app .
 
 workflows:
   version: 2
