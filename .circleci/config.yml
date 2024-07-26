@@ -3,9 +3,9 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: node:20
+      - image: circleci/node:20  # Use an appropriate CircleCI Node.js image
     steps:
-      - checkout
+      - checkout  # Check out the source code
       - run:
           name: List Files
           command: ls -l
@@ -13,13 +13,12 @@ jobs:
           name: Install Dependencies
           command: npm install
       - setup_remote_docker:
-          version: 20.10.7
-          docker_layer_caching: true
+          version: 20.10.7  # Ensure a compatible version of Docker is set up
+          docker_layer_caching: true  # Optionally enable Docker layer caching for faster builds
       - run:
           name: Build Backend Docker Image
           command: docker build -t backend-app:v1.0 .
-
-
+          
 workflows:
   version: 2
   build_and_test:
