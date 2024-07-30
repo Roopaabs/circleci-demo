@@ -17,7 +17,7 @@ jobs:
           command: source $BASH_ENV
       - run:
           name: Install Dependencies
-          command: sudo npm install -g npm@8 --save
+          command: npm install -g npm@8 --save
           environment:
             PATH: ~/.npm/bin:$PATH
       - setup_remote_docker:
