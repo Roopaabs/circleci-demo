@@ -7,8 +7,14 @@ jobs:
     steps:
       - checkout  # Check out the source code
       - run:
-          name: List Files
-          command: ls -l
+          name: Set npm prefix
+          command: npm config set prefix ~/.npm
+      - run:
+          name: Update PATH
+          command: echo 'export PATH=$HOME/.npm/bin:$PATH' >> $BASH_ENV
+      - run:
+          name: Source PATH
+          command: source $BASH_ENV
       - run:
           name: Install Dependencies
           command: sudo npm install -g npm@8 --save
