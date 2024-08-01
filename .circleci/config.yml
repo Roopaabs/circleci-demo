@@ -30,6 +30,11 @@ jobs:
       - run:
           name: Print PATH
           command: echo $PATH
+
+      - run:
+          name: Run tests
+          command: npm test  # Ensure you have a test script in your package.json
+
           
       - setup_remote_docker:
           version: 20.10.7  # Ensure a compatible version of Docker is set up
@@ -40,6 +45,7 @@ jobs:
       - run:
           name: Check Docker Image
           command: docker ps -a
+     
 
   deploy:
     docker:
