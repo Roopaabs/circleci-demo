@@ -1,40 +1,39 @@
-// __tests__/app.test.js
 const request = require('supertest');
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
+const { expect } = require('chai'); // Import expect from Chai
+const app = require('../index'); // Adjust the path if needed
 
-app.use(bodyParser.json());
+describe('API Endpoints', () => {
+  let server;
 
-const users = [];
-
-app.post('/add_user', (req, res) => {
-  const { username, email } = req.body;
-  if (!username || !email) {
-    return res.status(400).json({ error: 'Missing username or email' });
-  }
-  const newUser = { username, email };
-  users.push(newUser);
-  return res.status(201).json({ message: 'User added successfully' });
-});
-
-app.get('/get_users', (req, res) => {
-  return res.json({ users });
-});
-
-describe('User API', () => {
-  it('should add a user', async () => {
-    const response = await request(app)
-      .post('/add_user')
-      .send({ username: 'testuser', email: 'test@example.com' });
-    expect(response.statusCode).toBe(201);
-    expect(response.body.message).toBe('User added successfully');
+  before(() => {
+    server = app.listen(3001); // Start the server on a different port
   });
 
-  it('should return all users', async () => {
-    await request(app).post('/add_user').send({ username: 'anotheruser', email: 'another@example.com' });
-    const response = await request(app).get('/get_users');
-    expect(response.statusCode).toBe(200);
-    expect(response.body.users.length).toBeGreaterThan(0);
+  after(() => {
+    server.close(); // Close the server after tests
+  });
+
+  describe('GET /api/data', () => {
+    it('should retrieve stored data', async () => {
+      const response = await request(server)
+        .get('/api/data')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(response.body).to.be.an('array');
+    });
+  });
+
+  describe('POST /api/data/user_data', () => {
+    it('should store user data and respond with success message', async () => {
+      const newData = { key1: 'value1', key2: 'value2' };
+      const response = await request(server)
+        .post('/api/data/user_data')
+        .send(newData)
+        .expect('Content-Type', /json/)
+        .expect(201);
+
+      expect(response.body.message).to.equal('Data added successfully');
+    });
   });
 });
